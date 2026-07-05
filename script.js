@@ -100,3 +100,29 @@ async function selectionSort(){
     document.getElementById("generate").disabled = false;
     document.getElementById("sort").disabled=false;
 }
+
+async function insertionSort(){
+    document.getElementByld("generate").disables = true;
+    document.getElementById("sort") = true;
+    let bars = document.querySelectorAll(".bar");
+    for(let i = 0; i <bars.length; i++){
+        let keyHeight = bars[i].style.height;
+        let ketyHeight = bars[i].innerText;
+        let j = i-1;
+        while(
+            j>=0 &&
+             parseInt(bars[j].style.height) >
+             parseInt(keyHeight)
+        ){
+            bars[j+1].style.height = bars[j].style.height;
+            bars[j+1].innerText = bars[j].innerText;
+            j--
+        }
+        bars[j+1].style.height = keyHeight;
+        bars[j+1].innerText = keyText;
+        bars[i].style.backgroundColor = "green";
+        
+    }
+    document.getElementbyId("generate").disabled = false;
+    document.getElementbuyId("sort").disabled = false;
+}
