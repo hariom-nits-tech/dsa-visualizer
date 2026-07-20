@@ -102,12 +102,12 @@ async function selectionSort(){
 }
 
 async function insertionSort(){
-    document.getElementByld("generate").disables = true;
-    document.getElementById("sort") = true;
+    document.getElementById("generate").disabled = true;
+    document.getElementById("sort").disabled = true;
     let bars = document.querySelectorAll(".bar");
-    for(let i = 0; i <bars.length; i++){
+    for(let i = 1; i <bars.length; i++){
         let keyHeight = bars[i].style.height;
-        let ketyHeight = bars[i].innerText;
+        let keyText = bars[i].innerText;
         let j = i-1;
         while(
             j>=0 &&
@@ -116,13 +116,42 @@ async function insertionSort(){
         ){
             bars[j+1].style.height = bars[j].style.height;
             bars[j+1].innerText = bars[j].innerText;
-            j--
+            j-- ;
         }
         bars[j+1].style.height = keyHeight;
         bars[j+1].innerText = keyText;
-        bars[i].style.backgroundColor = "green";
+        if (j >= 0) {
+    bars[j].style.backgroundColor = "red";
+}
+
+    bars[j + 1].style.backgroundColor = "yellow";
+
+    let speed = document.getElementById("speed").value;
+    await new Promise(resolve => setTimeout(resolve, speed));
+
+     if (j >= 0) {
+    bars[j].style.backgroundColor = "blue";
+   }
+
+      for (let k = 0; k <= i; k++) {
+    bars[k].style.backgroundColor = "green";
+}
         
     }
-    document.getElementbyId("generate").disabled = false;
-    document.getElementbuyId("sort").disabled = false;
+    document.getElementById("generate").disabled = false;
+    document.getElementById("sort").disabled = false;
+}
+
+function startSorting(){
+    let algorithm = document.getElementById("algorithm").value;
+    if(algorithm == "bubble"){
+        bubbleSort();
+    }
+        else if(algorithm=="selection"){
+            selectionSort();
+        }
+      else if(algorithm == "insertion"){
+        insertionSort();
+      }
+
 }
