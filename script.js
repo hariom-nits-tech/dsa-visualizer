@@ -141,6 +141,64 @@ async function insertionSort(){
     document.getElementById("generate").disabled = false;
     document.getElementById("sort").disabled = false;
 }
+async function mergeSort(){
+    let bars = document.querySelectorAll(".bar");
+    await merge(bars,0,bars.length-1);
+}
+async function merge(bars,left,right){
+    if(left>=right){
+        return;
+    }
+    let mid = Math.floor((left +right)/2);
+    await merge(bars, left,mid);
+    await merge(bars, mid+1, right);
+    await mergeArrays(bars,left, mid, right);
+}
+async function mergeArrays(bars, left,mid,right){
+    let leftArray =[];
+    let rightArray =[];
+    for(let i = left; i<=mid; i++){
+        leftArray.push(parseInt(bars[i].style.height));
+        
+    }
+    for(let i = mid +1; i<=right; i++){
+            rightArray.push(parseInt(bars[i].style.height));
+        }
+    let i = 0;
+    let j = 0;
+    let k = left;
+  while(i<leftArray.length && j< rightArray.length){
+    if(leftArray[i]<= rightArray[j]){
+        bars[k].style.height =`${leftArray[i]}px`;
+        bars[k].innerText =leftArray[i];
+        i++;
+        k++;
+      
+    }
+    else{ bars[k].style.height=`${rightArray[j]}px`;
+    bars[k].innerText = rightArray[j];
+    j++;
+    k++;
+   }
+  }
+  while(i<leftArray.length){
+     bars[k].style.height=`${leftArray[i]}px`;
+     bars[k].innerText = leftArray[i];
+     i++;
+     k++;
+  }
+  while(j<rightArray.length){
+    bars[k].style.height=`${rightArray[j]}px`;
+    bars[k].innerText=rightArray[j];
+    j++;
+    k++;
+  }
+  let speed = document.getElementById("speed").value;
+  await new Promise(resolve=>setTimeout(resolve,speed));
+
+  document.getElementById("generate").disabled = false;
+  document.getElementById("sort").disabled=false;
+}
 
 function startSorting(){
     let algorithm = document.getElementById("algorithm").value;
@@ -152,6 +210,9 @@ function startSorting(){
         }
       else if(algorithm == "insertion"){
         insertionSort();
+      }
+      else if(algorithm == "merge"){
+            mergeSort();
       }
 
 }
