@@ -142,8 +142,13 @@ async function insertionSort(){
     document.getElementById("sort").disabled = false;
 }
 async function mergeSort(){
+    document.getElementById("generate").disabled = true;
+    document.getElementById("sort").disabled = true;
     let bars = document.querySelectorAll(".bar");
     await merge(bars,0,bars.length-1);
+    bars.forEach(bar=>{
+        bar.style.backgroundColor="green"
+    });
 }
 async function merge(bars,left,right){
     if(left>=right){
