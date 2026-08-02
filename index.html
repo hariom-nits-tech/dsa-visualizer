@@ -10,11 +10,13 @@
 
            
                 <button id = "generate" onclick ="generateArray()">Generate New Array</button>
-                <select id="algorithm">
+                <select id="algorithm" onchange ="updateAlgorithmInfo()">
+                    
                     <option value ="bubble">Bubble Sort</option>
                     <option value="selection">Selection Sort</option>
                     <option value = "insertion"> Insertion Sort</option>
                     <option value = "merge"> Merge Sort</option>
+                    <option value = "quick">Quick Sort</option>
                 </select>
                 <button id = "sort" onclick ="startSorting()">Start Sorting</button>
                 <br><br>
@@ -23,6 +25,18 @@
 
                 <input type="range" id ="speed" min = "10" max ="500" value="100">
                 <p>speed control</p>
+                <h2>Algorithm Information</h2>
+                <div id="info">
+                    <p><strong>Name:</strong><span id ="algoName"></span></p>
+                    <p><strong>Best Case:</strong><span id ="best"></span></p>
+                    <p><strong>Average Case:</strong><span id="average"></span></p>
+                    <p><strong>Worst Case:</strong><span id ="worst"></span><p>
+                    <p><strong>Space:</strong><span id = "space"></span><p>
+                    <p id="description"></p>
+                    
+
+
+
 
 
                 <div id="array-container"></div>
