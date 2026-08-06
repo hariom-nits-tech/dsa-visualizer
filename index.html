@@ -9,6 +9,8 @@
             <h1>Sorting Visualizer</h1>
 
            
+                <div id ="controls">
+
                 <button id = "generate" onclick ="generateArray()">Generate New Array</button>
                 <select id="algorithm" onchange ="updateAlgorithmInfo()">
                     
@@ -24,7 +26,19 @@
                 
 
                 <input type="range" id ="speed" min = "10" max ="500" value="100">
+                </div>
                 <p>speed control</p>
+                <label>Array Size:</label>
+                <input 
+                type ="range"
+                id ="size"
+                min ="10"
+                max="100"
+                value="30"
+                oninput="generateArray()">
+
+                <span id ="sizeValue">30</span>
+
                 <h2>Algorithm Information</h2>
                 <div id="info">
                     <p><strong>Name:</strong><span id ="algoName"></span></p>
@@ -34,7 +48,8 @@
                     <p><strong>Space:</strong><span id = "space"></span><p>
                     <p id="description"></p>
                     
-
+                <h3>Status: <span id ="status">Ready</span></h3>
+                <h3>Total Elements: <span id ="totalElements">30</span></h3>
 
 
 
@@ -45,5 +60,6 @@
 
                 </body>
                 </html>
+                </div>
               
              

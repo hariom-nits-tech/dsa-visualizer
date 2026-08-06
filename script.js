@@ -1,10 +1,14 @@
 function generateArray(){
     
+    let size=document.getElementById("size").value;
+    document.getElementById("sizeValue").innerText=size;
+
+    document.getElementById("totalElements").innerText = size;
     let container =
     document.getElementById("array-container");
     container.innerHTML ="";
 
-    for(let i = 0; i< 30; i++){
+    for(let i = 0; i< size; i++){
         let value = Math.floor(Math.random()*300);
 
         let bar = document.createElement("div");
@@ -21,8 +25,11 @@ function generateArray(){
 }
 
 async function bubbleSort(){
+    document.getElementById("status").innerText="Sorting...";
     document.getElementById("generate").disabled =true;
     document.getElementById("sort").disabled = true;
+    document.getElementById("size").disabled=true;
+    document.getElementById("speed").disabled=true;
 
     let bars = document.querySelectorAll(".bar");
     for(let i = 0; i<bars.length; i++){
@@ -54,14 +61,21 @@ async function bubbleSort(){
   
  
  }
-  document.getElementById("generate").disabled=false;
+    document.getElementById("generate").disabled=false;
     document.getElementById("sort").disabled=false;
+    document.getElementById("status").innerText="Completed";
+    document.getElementById("size").disabled=false;
+    document.getElementById("speed").disabled=false;
 }
 
 
 async function selectionSort(){
+    document.getElementById("status").innerText="Sorting...";
     document.getElementById("generate").disabled = true;
     document.getElementById("sort").disabled = true;
+    document.getElementById("size").disabled=true;
+    document.getElementById("speed").disabled=true;
+
     let bars=document.querySelectorAll(".bar");
     for(let i = 0; i<bars.length; i++){
         let minIndex = i;
@@ -99,11 +113,18 @@ async function selectionSort(){
 
     document.getElementById("generate").disabled = false;
     document.getElementById("sort").disabled=false;
+    document.getElementById("status").innerText="Completed";
+    document.getElementById("size").disabled=false;
+    document.getElementById("speed").disabled=false;
 }
 
 async function insertionSort(){
+    document.getElementById("status").innerText="Sorting...";
     document.getElementById("generate").disabled = true;
     document.getElementById("sort").disabled = true;
+    document.getElementById("size").disabled=true;
+    document.getElementById("speed").disabled=true;
+
     let bars = document.querySelectorAll(".bar");
     for(let i = 1; i <bars.length; i++){
         let keyHeight = bars[i].style.height;
@@ -140,10 +161,17 @@ async function insertionSort(){
     }
     document.getElementById("generate").disabled = false;
     document.getElementById("sort").disabled = false;
+    document.getElementById("status").innerText="Completed";
+    document.getElementById("size").disabled=false;
+    document.getElementById("speed").disabled=false;
 }
 async function mergeSort(){
+    document.getElementById("status").innerText="Sorting...";
     document.getElementById("generate").disabled = true;
     document.getElementById("sort").disabled = true;
+    document.getElementById("size").disabled=true;
+    document.getElementById("speed").disabled=true;
+
     let bars = document.querySelectorAll(".bar");
     await merge(bars,0,bars.length-1);
     bars.forEach(bar=>{
@@ -152,6 +180,7 @@ async function mergeSort(){
 
      document.getElementById("generate").disabled = false;
      document.getElementById("sort").disabled = false;
+     
     bars.forEach(bar=>{
         bar.style.backgroundColor="green"
     });
@@ -209,11 +238,18 @@ async function mergeArrays(bars, left,mid,right){
 
   document.getElementById("generate").disabled = false;
   document.getElementById("sort").disabled=false;
+  document.getElementById("status").innerText="Completed";
+  document.getElementById("size").disabled=false;
+  document.getElementById("speed").disabled=false;
 }
 
 async function quickSort(){
+    document.getElementById("status").innerText="Sorting...";
     document.getElementById("generate").disabled =true;
     document.getElementById("sort").disabled = true;
+    document.getElementById("size").disabled=true;
+    document.getElementById("speed").disabled=true;
+
     let bars = document.querySelectorAll(".bar");
     await quick(bars,0,bars.length-1);
     bars.forEach(bar=>{
@@ -221,6 +257,10 @@ async function quickSort(){
     });
     document.getElementById("generate").disabled = false;
     document.getElementById("sort").disabled =false;
+    document.getElementById("status").innerText="Completed";
+    document.getElementById("size").disabled=false;
+    document.getElementById("speed").disabled=false;
+
 }
 
 async function quick(bars, low,high){
