@@ -22,12 +22,15 @@
                 </select>
                 <button id = "sort" onclick ="startSorting()">Start Sorting</button>
                 <br><br>
+                <input type ="number"id ="searchValue " placeholder ="Enter value">
+                <button id ="search" onclick="startSearch()">Search</button>
+                <button id ="theme"onclick="toggleTheme()"> 🌙Dark Mode</button>
 
                 
 
                 <input type="range" id ="speed" min = "10" max ="500" value="100">
                 </div>
-                <p>speed control</p>
+                <label for="speed">Speed:</label>
                 <label>Array Size:</label>
                 <input 
                 type ="range"
@@ -44,14 +47,27 @@
                     <p><strong>Name:</strong><span id ="algoName"></span></p>
                     <p><strong>Best Case:</strong><span id ="best"></span></p>
                     <p><strong>Average Case:</strong><span id="average"></span></p>
-                    <p><strong>Worst Case:</strong><span id ="worst"></span><p>
-                    <p><strong>Space:</strong><span id = "space"></span><p>
+                    <p><strong>Worst Case:</strong><span id ="worst"></span></p>
+                    <p><strong>Space:</strong><span id = "space"></span></p>
                     <p id="description"></p>
                     
-                <h3>Status: <span id ="status">Ready</span></h3>
-                <h3>Total Elements: <span id ="totalElements">30</span></h3>
+                <div id="statistics">
 
+    <h2>Statistics</h2>
 
+    <p><strong>Status:</strong> <span id="status">Ready</span></p>
+
+    <p><strong>Total Elements:</strong> <span id="totalElements">30</span></p>
+
+    <p><strong>Comparisons:</strong> <span id="comparisons">0</span></p>
+
+    <p><strong>Swaps:</strong> <span id="swaps">0</span></p>
+
+    <p><strong>Sorting Time:</strong> <span id="time">0 ms</span></p>
+
+    </div>
+                
+                
 
 
                 <div id="array-container"></div>

@@ -1,6 +1,10 @@
 body {
     text-align: center;
     font-family: Arial, sans-serif;
+    background-color:#f5f5f5;
+    font-family:Arial, sans-serif;
+    margin:0;
+    padding:0;
 
 }
 
@@ -26,15 +30,7 @@ body {
     background-color 0.2s;
 }
 
-button{
-    padding: 10px 18px;
-    border:none;
-    border-radius:8px;
-    background:#2563eb;
-    color:white;
-    cursor:pointer;
-    font-weight:bold;
-}
+
 #controls{
     display:flex;
     justify-content:center;
@@ -51,10 +47,12 @@ button{
     Color:white;
     border:none;
     padding:10px 20px;
-    border-radius:6 px;
-    cursor:pointer
-    font size-16 px;
-    transition: 0.3s;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+    transition:
+    background-color 0.3s,
+    transform 0.3s;
 
 
 }
@@ -64,7 +62,7 @@ button:hover{
     transform:scale(1.05);
 }
 
-button disabled{
+button:disabled{
     background-color:#45a049;
     cursor:not-allowed;
 }
@@ -75,12 +73,54 @@ button disabled{
     margin:20px auto;
     padding:20px;
     border-radius:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,0,1);
-    text-align:center;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    text-align:left;
 }
-body{background-color:#f5f5f5;
-    font-family:Arial, sans-serif;
-    margin:0;
-    padding:0;
 
+#statistics{
+    width:500px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+#statistics p{
+    font-size:18px;
+    margin:10px 0;
+}
+.bar{
+    border-radius:4px 4px 0 0;
+}
+.dark-mode{
+    background-color:#1e1e1e;
+    color:white;
+}
+.dark-mode #info,
+.dark-mode #statistics{
+    background:#2d2d2d;
+    color:white;
+}
+.dark-mode #controls{
+    background:#333;
+}
+.dark-mode #button{
+    background:#2563eb;
+}
+.dark-mode button:hover{
+    background:#1d4ed8;
+}
+.dark-mode.bar{
+    background-color:#60a5fa;
+}
+.dark-mode input,
+.dark-mode select{
+    background:#444;
+    color:white;
+    border:1px solid #666;
+}
+
+.dark-mode input::placeholder{
+    color:#ccc;
 }
