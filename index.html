@@ -21,16 +21,18 @@
                     <option value = "quick">Quick Sort</option>
                 </select>
                 <button id = "sort" onclick ="startSorting()">Start Sorting</button>
+                <button id="pause" onclick="togglePause()" disabled>
+                   ⏸️ Pause
+               </button>
                 <br><br>
-                <input type ="number"id ="searchValue " placeholder ="Enter value">
+                <input type ="number"id ="searchValue" placeholder ="Enter value">
                 <button id ="search" onclick="startSearch()">Search</button>
                 <button id ="theme"onclick="toggleTheme()"> 🌙Dark Mode</button>
 
                 
 
-                <input type="range" id ="speed" min = "10" max ="500" value="100">
-                </div>
-                <label for="speed">Speed:</label>
+               <label for="speed">Speed:</label>
+               <input type="range" id="speed" min="10" max="500" value="100">
                 <label>Array Size:</label>
                 <input 
                 type ="range"
@@ -51,22 +53,23 @@
                     <p><strong>Space:</strong><span id = "space"></span></p>
                     <p id="description"></p>
                     
-                <div id="statistics">
+                </div>
 
-    <h2>Statistics</h2>
+            <div id="statistics">
 
-    <p><strong>Status:</strong> <span id="status">Ready</span></p>
+              <h2>Statistics</h2>
 
-    <p><strong>Total Elements:</strong> <span id="totalElements">30</span></p>
+              <p><strong>Status:</strong> <span id="status">Ready</span></p>
 
-    <p><strong>Comparisons:</strong> <span id="comparisons">0</span></p>
+               <p><strong>Total Elements:</strong> <span id="totalElements">30</span></p>
 
-    <p><strong>Swaps:</strong> <span id="swaps">0</span></p>
+               <p><strong>Comparisons:</strong> <span id="comparisons">0</span></p>
 
-    <p><strong>Sorting Time:</strong> <span id="time">0 ms</span></p>
+               <p><strong>Swaps:</strong> <span id="swaps">0</span></p>
+ 
+              <p><strong>Sorting Time:</strong> <span id="time">0 ms</span></p>
 
-    </div>
-                
+               </div>
                 
 
 
@@ -76,6 +79,5 @@
 
                 </body>
                 </html>
-                </div>
               
              
