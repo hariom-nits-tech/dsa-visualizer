@@ -1,13 +1,19 @@
 let comparisonCount = 0;
 let swapCount = 0;
 let paused = false;
+let isSorting = false;
 
 async function waitIfPaused() {
 
-    while (paused) {
+    if (!isSorting) return;
+
+    while (paused && isSorting) {
         await new Promise(resolve => setTimeout(resolve, 100));
     }
 
+    if (!isSorting) {
+        throw new Error("Sorting cancelled");
+    }
 }
 function togglePause() {
 
@@ -23,12 +29,50 @@ function togglePause() {
 
 }
 
+function resetVisualizer() {
+
+    isSorting = false;
+    paused = false;
+
+    // Stop paused state
+    paused = false;
+
+    // Reset counters
+    comparisonCount = 0;
+    swapCount = 0;
+
+    // Reset display
+    document.getElementById("comparisons").innerText = "0";
+    document.getElementById("swaps").innerText = "0";
+    document.getElementById("time").innerText = "0 ms";
+    document.getElementById("status").innerText = "Ready";
+
+    // Reset pause button
+    let pauseButton = document.getElementById("pause");
+    pauseButton.disabled = true;
+    pauseButton.innerText = "⏸️ Pause";
+
+    // Generate a fresh array
+    generateArray();
+}
+
 function getSpeed() {
     return Number(document.getElementById("speed").value);
 }
 
 function delay() {
-    return new Promise(resolve => setTimeout(resolve, getSpeed()));
+    return new Promise(resolve =>
+        setTimeout(resolve, getSpeed())
+    );
+}
+
+async function sortingDelay() {
+
+    await delay();
+
+    if (!isSorting) {
+        throw new Error("Sorting cancelled");
+    }
 }
 
 function updateCounters() {
@@ -121,7 +165,7 @@ async function bubbleSort() {
             bars[j].style.backgroundColor = "red";
             bars[j + 1].style.backgroundColor = "red";
 
-            await delay();
+            await sortingDelay();
 
             comparisonCount++;
             updateCounters();
@@ -186,7 +230,7 @@ async function selectionSort() {
 
             bars[j].style.backgroundColor = "red";
 
-            await delay();
+            await sortingDelay();
 
             comparisonCount++;
 
@@ -275,7 +319,7 @@ async function insertionSort() {
 
             bars[j].style.backgroundColor = "red";
 
-            await delay();
+            await sortingDelay();
 
             if (
                 parseInt(bars[j].style.height) <=
@@ -462,7 +506,7 @@ async function mergeArrays(
 
         k++;
 
-        await delay();
+        await sortingDelay();
     }
 
 
@@ -616,7 +660,7 @@ async function partition(
         bars[j].style.backgroundColor =
             "red";
 
-        await delay();
+        await sortingDelay();
 
 
         if (
@@ -862,35 +906,53 @@ function updateAlgorithmInfo() {
 
 async function startSorting(){
 
+    try {
+
+        isSorting = true;
+        paused = false;
+
+        let pauseButton = document.getElementById("pause");
+        pauseButton.disabled = false;
+        pauseButton.innerText = "⏸️ Pause";
+
+        let algorithm = document.getElementById("algorithm").value;
+
+        if(algorithm == "bubble"){
+            await bubbleSort();
+        }
+        else if(algorithm == "selection"){
+            await selectionSort();
+        }
+        else if(algorithm == "insertion"){
+            await insertionSort();
+        }
+        else if(algorithm == "merge"){
+            await mergeSort();
+        }
+        else if(algorithm == "quick"){
+            await quickSort();
+        }
+
+    }
+    catch(error) {
+
+        // Sorting was cancelled by Reset
+
+    }
+    finally {
+
+    isSorting = false;
     paused = false;
 
     let pauseButton = document.getElementById("pause");
-    pauseButton.disabled = false;
-    pauseButton.innerText = "⏸️ Pause";
-
-    let algorithm = document.getElementById("algorithm").value;
-
-    if(algorithm == "bubble"){
-        await bubbleSort();
-    }
-    else if(algorithm == "selection"){
-        await selectionSort();
-    }
-    else if(algorithm == "insertion"){
-        await insertionSort();
-    }
-    else if(algorithm == "merge"){
-        await mergeSort();
-    }
-    else if(algorithm == "quick"){
-        await quickSort();
-    }
 
     pauseButton.disabled = true;
     pauseButton.innerText = "⏸️ Pause";
-    paused = false;
-}
 
+    // Enable controls again
+    setControlsDisabled(false);
+}
+}
 
 function startSearch() {
 
