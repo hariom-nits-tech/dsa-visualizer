@@ -106,6 +106,15 @@ function setControlsDisabled(disabled) {
         searchButton.disabled = disabled;
     }
 }
+function updateProgress(current, total) {
+
+    let percentage = Math.floor(
+        (current / total) * 100
+    );
+
+    document.getElementById("progress").innerText =
+        percentage + "%";
+}
 
 function generateArray() {
 
@@ -142,6 +151,7 @@ function generateArray() {
     comparisonCount = 0;
     swapCount = 0;
     searchComparisonCount = 0;
+    document.getElementById("progress").innerText = "0%";
 
           updateCounters();
            updateSearchCounter();
@@ -204,6 +214,7 @@ async function bubbleSort() {
         }
 
         bars[bars.length - i - 1].style.backgroundColor = "green";
+        updateProgress(i + 1, bars.length);
     }
 
     bars.forEach(bar => {
@@ -284,6 +295,8 @@ async function selectionSort() {
         }
 
         bars[i].style.backgroundColor = "green";
+
+        updateProgress(i + 1, bars.length);
 
         if (minIndex !== i) {
             bars[minIndex].style.backgroundColor = "blue";
@@ -368,6 +381,7 @@ async function insertionSort() {
 
             bars[k].style.backgroundColor = "green";
         }
+        updateProgress(i + 1, bars.length);
     }
 
     bars.forEach(bar => {
@@ -573,6 +587,7 @@ async function mergeArrays(
         bars[index].style.backgroundColor =
             "blue";
     }
+    
 }
 
 
@@ -590,6 +605,7 @@ async function quickSort() {
     comparisonCount = 0;
 
     swapCount = 0;
+    document.getElementById("progress").innerText = "0%";
 
     updateCounters();
 
@@ -599,7 +615,8 @@ async function quickSort() {
         0,
         bars.length - 1
     );
-
+    
+     document.getElementById("progress").innerText = "100%";
 
     bars.forEach(bar => {
 
@@ -757,6 +774,8 @@ async function partition(
 
     return i + 1;
 }
+
+
 function updateAlgorithmInfo() {
 
     let algorithm =

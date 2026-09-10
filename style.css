@@ -123,3 +123,41 @@ button:disabled{
 .dark-mode input::placeholder{
     color:#ccc;
 }
+
+#legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+#legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-box {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.legend-box.blue {
+    background-color: blue;
+}
+
+.legend-box.red {
+    background-color: red;
+}
+
+.legend-box.yellow {
+    background-color: yellow;
+}
+
+.legend-box.green {
+    background-color: green;
+}
