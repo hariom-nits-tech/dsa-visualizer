@@ -33,9 +33,17 @@
                 <button id ="theme"onclick="toggleTheme()"> 🌙Dark Mode</button>
 
                 
+                <label for="speed">Speed:</label>
 
-               <label for="speed">Speed:</label>
-               <input type="range" id="speed" min="10" max="500" value="100">
+                 <input
+                   type="range"
+                  id="speed"
+                  min="10"
+                     max="500"
+                   value="100"
+                   oninput="updateSpeedValue()">
+ 
+                   <span id="speedValue">100 ms delay</span>
                 <label>Array Size:</label>
                 <input 
                 type ="range"

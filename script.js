@@ -117,6 +117,7 @@ function updateProgress(current, total) {
 }
 
 function generateArray() {
+     
 
     let size = Number(document.getElementById("size").value);
 
@@ -659,7 +660,17 @@ async function quick(
         );
     }
 }
+function updateSpeedValue() {
+    let speed = document.getElementById("speed").value;
 
+    document.getElementById("speedValue").innerText =
+        speed + " ms delay";
+}
+function updateSizeValue() {
+    let size = document.getElementById("size").value;
+
+    document.getElementById("sizeValue").innerText = size;
+}
 
 async function partition(
     bars,
