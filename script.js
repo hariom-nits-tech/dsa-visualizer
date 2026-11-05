@@ -393,6 +393,22 @@ async function insertionSort() {
 }
 
 
+
+
+function countMergeWork(left, right) {
+
+    if (left >= right) {
+        return 0;
+    }
+
+    let mid = Math.floor((left + right) / 2);
+
+    return (right - left + 1)
+        + countMergeWork(left, mid)
+        + countMergeWork(mid + 1, right);
+}
+
+
 async function mergeSort() {
 
     let startTime = performance.now();
@@ -408,50 +424,66 @@ async function mergeSort() {
 
     let bars = document.querySelectorAll(".bar");
 
+    let totalWork = countMergeWork(0, bars.length - 1);
+
+    let progress = {
+        completed: 0,
+        total: totalWork
+    };
+
+    updateProgress(0, totalWork);
+
     await merge(
         bars,
         0,
-        bars.length - 1
+        bars.length - 1,
+        progress
     );
 
     bars.forEach(bar => {
         bar.style.backgroundColor = "green";
     });
 
+    updateProgress(progress.total, progress.total);
+
     finishSorting(startTime);
 }
 
 
-async function merge(bars, left, right) {
+async function merge(bars, left, right, progress) {
 
     if (left >= right) {
         return;
     }
-        await waitIfPaused();
 
-    let mid = Math.floor(
-        (left + right) / 2
-    );
+    await waitIfPaused();
+
+    let mid = Math.floor((left + right) / 2);
 
     await merge(
         bars,
         left,
-        mid
+        mid,
+        progress
     );
-        await waitIfPaused();
+
+    await waitIfPaused();
 
     await merge(
         bars,
         mid + 1,
-        right
+        right,
+        progress
     );
-        await waitIfPaused();
+
+    await waitIfPaused();
 
     await mergeArrays(
         bars,
         left,
         mid,
-        right
+        right,
+        progress
     );
 }
 
@@ -460,57 +492,41 @@ async function mergeArrays(
     bars,
     left,
     mid,
-    right
+    right,
+    progress
 ) {
 
     let leftArray = [];
-
     let rightArray = [];
 
-
     for (let i = left; i <= mid; i++) {
-
         leftArray.push(
             parseInt(bars[i].style.height)
         );
     }
 
-
-    for (
-        let i = mid + 1;
-        i <= right;
-        i++
-    ) {
-
+    for (let i = mid + 1; i <= right; i++) {
         rightArray.push(
             parseInt(bars[i].style.height)
         );
     }
 
-
     let i = 0;
-
     let j = 0;
-
     let k = left;
-
 
     while (
         i < leftArray.length &&
         j < rightArray.length
     ) {
-            await waitIfPaused();
 
+        await waitIfPaused();
 
         comparisonCount++;
 
         updateCounters();
 
-
-        if (
-            leftArray[i] <=
-            rightArray[j]
-        ) {
+        if (leftArray[i] <= rightArray[j]) {
 
             bars[k].style.height =
                 `${leftArray[i]}px`;
@@ -535,13 +551,19 @@ async function mergeArrays(
 
         k++;
 
+        progress.completed++;
+
+        updateProgress(
+            progress.completed,
+            progress.total
+        );
+
         await sortingDelay();
     }
 
-
     while (i < leftArray.length) {
-            await waitIfPaused();
 
+        await waitIfPaused();
 
         bars[k].style.height =
             `${leftArray[i]}px`;
@@ -550,18 +572,19 @@ async function mergeArrays(
             leftArray[i];
 
         i++;
-
         k++;
 
-        swapCount++;
+        progress.completed++;
 
-        updateCounters();
+        updateProgress(
+            progress.completed,
+            progress.total
+        );
     }
 
-
     while (j < rightArray.length) {
-            await waitIfPaused();
 
+        await waitIfPaused();
 
         bars[k].style.height =
             `${rightArray[j]}px`;
@@ -570,26 +593,22 @@ async function mergeArrays(
             rightArray[j];
 
         j++;
-
         k++;
 
-        swapCount++;
+        progress.completed++;
 
-        updateCounters();
+        updateProgress(
+            progress.completed,
+            progress.total
+        );
     }
 
+    for (let index = left; index <= right; index++) {
 
-    for (
-        let index = left;
-        index <= right;
-        index++
-    ) {
-
-        bars[index].style.backgroundColor =
-            "blue";
+        bars[index].style.backgroundColor = "blue";
     }
-    
 }
+
 
 
 async function quickSort() {
@@ -602,6 +621,7 @@ async function quickSort() {
     setControlsDisabled(true);
 
     let bars = document.querySelectorAll(".bar");
+   
 
     comparisonCount = 0;
 
