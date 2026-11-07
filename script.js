@@ -116,8 +116,8 @@ function updateProgress(current, total) {
         percentage + "%";
 }
 
+
 function generateArray() {
-     
 
     let size = Number(document.getElementById("size").value);
 
@@ -138,12 +138,13 @@ function generateArray() {
 
         bar.style.height = `${value}px`;
 
-        bar.innerText = value;
+       bar.innerText = "";
 
+       bar.dataset.value = value;
+
+       bar.title = "Value: " + value;
         bar.style.color = "white";
-
         bar.style.fontSize = "10px";
-
         bar.style.textAlign = "center";
 
         container.appendChild(bar);
@@ -152,17 +153,18 @@ function generateArray() {
     comparisonCount = 0;
     swapCount = 0;
     searchComparisonCount = 0;
+
     document.getElementById("progress").innerText = "0%";
 
-          updateCounters();
-           updateSearchCounter();
+    updateCounters();
+    updateSearchCounter();
 
-        document.getElementById("searchTime").innerText = "0 ms";
-
-   
+    document.getElementById("searchTime").innerText = "0 ms";
 
     document.getElementById("status").innerText = "Ready";
 }
+
+
 async function bubbleSort() {
 
     let startTime = performance.now();
@@ -930,7 +932,10 @@ function updateAlgorithmInfo() {
 }
 
 
+
 async function startSorting(){
+
+    let sortingTimer = null;
 
     try {
 
@@ -940,6 +945,20 @@ async function startSorting(){
         let pauseButton = document.getElementById("pause");
         pauseButton.disabled = false;
         pauseButton.innerText = "⏸️ Pause";
+
+        // Start live sorting timer
+        const liveStartTime = performance.now();
+
+        sortingTimer = setInterval(() => {
+
+            if (isSorting) {
+
+                document.getElementById("time").innerText =
+                    (performance.now() - liveStartTime).toFixed(2) + " ms";
+
+            }
+
+        }, 50);
 
         let algorithm = document.getElementById("algorithm").value;
 
@@ -967,47 +986,41 @@ async function startSorting(){
     }
     finally {
 
-    isSorting = false;
-    paused = false;
+        // Stop live timer
+        clearInterval(sortingTimer);
 
-    let pauseButton = document.getElementById("pause");
+        isSorting = false;
+        paused = false;
 
-    pauseButton.disabled = true;
-    pauseButton.innerText = "⏸️ Pause";
+        let pauseButton = document.getElementById("pause");
 
-    // Enable controls again
-    setControlsDisabled(false);
+        pauseButton.disabled = true;
+        pauseButton.innerText = "⏸️ Pause";
+
+        // Enable controls again
+        setControlsDisabled(false);
+    }
 }
-}
+
 
 function startSearch() {
 
-    let value =
-        parseInt(
-            document.getElementById("searchValue").value
-        );
-
+    let value = parseInt(
+        document.getElementById("searchValue").value
+    );
 
     if (isNaN(value)) {
-
         alert("Please enter a number.");
-
         return;
     }
 
-
     let algorithm =
-        document.getElementById("algorithm").value;
-
+        document.getElementById("searchAlgorithm").value;
 
     if (algorithm === "binary") {
-
         binarySearch(value);
-
     }
-
     else {
-
         linearSearch(value);
     }
 }
@@ -1051,7 +1064,7 @@ async function linearSearch(target) {
 
 
         if (
-            parseInt(bars[i].innerText) ===
+            Number(bars[i].dataset.value) ===
             target
         ) {
 
@@ -1090,30 +1103,23 @@ async function linearSearch(target) {
 
 
 
+
 async function binarySearch(target) {
 
-    let bars =
-        document.querySelectorAll(".bar");
-       searchComparisonCount = 0;
-       updateSearchCounter();
+    let bars = document.querySelectorAll(".bar");
 
-       let startTime = performance.now();
+    searchComparisonCount = 0;
+    updateSearchCounter();
 
-    /*
-       Binary Search only works
-       on a sorted array.
-    */
+    let startTime = performance.now();
 
-    for (
-        let i = 1;
-        i < bars.length;
-        i++
-    ) {
+    // Check whether the array is sorted
+    for (let i = 1; i < bars.length; i++) {
 
-        if (
-            parseInt(bars[i - 1].innerText) >
-            parseInt(bars[i].innerText)
-        ) {
+        let previousValue = parseInt(bars[i - 1].style.height);
+        let currentValue = parseInt(bars[i].style.height);
+
+        if (previousValue > currentValue) {
 
             document.getElementById("status").innerText =
                 "Sort the array first for Binary Search";
@@ -1122,89 +1128,66 @@ async function binarySearch(target) {
         }
     }
 
-
     setControlsDisabled(true);
-
 
     document.getElementById("status").innerText =
         "Searching...";
 
-
     resetBarColors();
 
-
     let left = 0;
-
     let right = bars.length - 1;
 
-
     while (left <= right) {
+
+        let mid = Math.floor((left + right) / 2);
+
         searchComparisonCount++;
         updateSearchCounter();
 
-        let mid =
-            Math.floor(
-                (left + right) / 2
-            );
-
-
-        bars[mid].style.backgroundColor =
-            "red";
-
+        bars[mid].style.backgroundColor = "red";
 
         await delay();
 
-
-        let value =
-            parseInt(
-                bars[mid].innerText
-            );
-
+        let value = parseInt(bars[mid].style.height);
 
         if (value === target) {
-           
 
-            bars[mid].style.backgroundColor =
-                "green";
-
+            bars[mid].style.backgroundColor = "green";
 
             document.getElementById("status").innerText =
                 "Element Found";
 
-
-            enableSearchControls();
             let endTime = performance.now();
 
-             document.getElementById("searchTime").innerText =
-              (endTime - startTime).toFixed(2) + " ms";
+            document.getElementById("searchTime").innerText =
+                (endTime - startTime).toFixed(2) + " ms";
+
+            enableSearchControls();
 
             return;
         }
 
-
-        bars[mid].style.backgroundColor =
-            "blue";
-
+        bars[mid].style.backgroundColor = "blue";
 
         if (value < target) {
 
             left = mid + 1;
 
         }
-
         else {
 
             right = mid - 1;
         }
     }
 
-
     document.getElementById("status").innerText =
         "Element Not Found";
-     let endTime = performance.now();
 
-      document.getElementById("searchTime").innerText =
-       (endTime - startTime).toFixed(2) + " ms";
+    let endTime = performance.now();
+
+    document.getElementById("searchTime").innerText =
+        (endTime - startTime).toFixed(2) + " ms";
 
     enableSearchControls();
 }
