@@ -621,140 +621,109 @@ async function quickSort() {
     setControlsDisabled(true);
 
     let bars = document.querySelectorAll(".bar");
-   
 
     comparisonCount = 0;
-
     swapCount = 0;
-    document.getElementById("progress").innerText = "0%";
 
     updateCounters();
 
+    let progress = {
+        completed: 0,
+        total: bars.length
+    };
+
+    updateProgress(0, progress.total);
 
     await quick(
         bars,
         0,
-        bars.length - 1
+        bars.length - 1,
+        progress
     );
-    
-     document.getElementById("progress").innerText = "100%";
 
     bars.forEach(bar => {
-
-        bar.style.backgroundColor =
-            "green";
+        bar.style.backgroundColor = "green";
     });
 
+    updateProgress(progress.total, progress.total);
 
     finishSorting(startTime);
 }
 
 
-async function quick(
-    bars,
-    low,
-    high
-) {
+async function quick(bars, low, high, progress) {
 
     if (low < high) {
 
-        let pivotIndex =
-            await partition(
-                bars,
-                low,
-                high
-            );
-             await waitIfPaused();
+        let pivotIndex = await partition(
+            bars,
+            low,
+            high,
+            progress
+        );
+
+        await waitIfPaused();
 
         await quick(
             bars,
             low,
-            pivotIndex - 1
+            pivotIndex - 1,
+            progress
         );
+
         await waitIfPaused();
 
         await quick(
             bars,
             pivotIndex + 1,
-            high
+            high,
+            progress
         );
     }
 }
-function updateSpeedValue() {
-    let speed = document.getElementById("speed").value;
 
-    document.getElementById("speedValue").innerText =
-        speed + " ms delay";
-}
-function updateSizeValue() {
-    let size = document.getElementById("size").value;
 
-    document.getElementById("sizeValue").innerText = size;
-}
+async function partition(bars, low, high, progress) {
 
-async function partition(
-    bars,
-    low,
-    high
-) {
-
-    let pivot =
-        parseInt(
-            bars[high].style.height
-        );
+    let pivot = parseInt(
+        bars[high].style.height
+    );
 
     let i = low - 1;
 
-    bars[high].style.backgroundColor =
-        "yellow";
+    bars[high].style.backgroundColor = "yellow";
 
+    for (let j = low; j < high; j++) {
 
-    for (
-        let j = low;
-        j < high;
-        j++
-    ) {
         await waitIfPaused();
+
         comparisonCount++;
 
         updateCounters();
 
-        bars[j].style.backgroundColor =
-            "red";
+        bars[j].style.backgroundColor = "red";
 
         await sortingDelay();
 
-
         if (
-            parseInt(
-                bars[j].style.height
-            ) < pivot
+            parseInt(bars[j].style.height) < pivot
         ) {
 
             i++;
 
-
             if (i !== j) {
 
-                let tempHeight =
-                    bars[i].style.height;
+                let tempHeight = bars[i].style.height;
 
-                bars[i].style.height =
-                    bars[j].style.height;
+                bars[i].style.height = bars[j].style.height;
 
-                bars[j].style.height =
-                    tempHeight;
+                bars[j].style.height = tempHeight;
 
+                let tempText = bars[i].innerText;
 
-                let tempText =
-                    bars[i].innerText;
+                bars[i].innerText = bars[j].innerText;
 
-                bars[i].innerText =
-                    bars[j].innerText;
-
-                bars[j].innerText =
-                    tempText;
-
+                bars[j].innerText = tempText;
 
                 swapCount++;
 
@@ -762,49 +731,42 @@ async function partition(
             }
         }
 
-
-        bars[j].style.backgroundColor =
-            "blue";
+        bars[j].style.backgroundColor = "blue";
     }
-
 
     if (i + 1 !== high) {
 
-        let tempHeight =
-            bars[i + 1].style.height;
+        let tempHeight = bars[i + 1].style.height;
 
-        bars[i + 1].style.height =
-            bars[high].style.height;
+        bars[i + 1].style.height = bars[high].style.height;
 
-        bars[high].style.height =
-            tempHeight;
+        bars[high].style.height = tempHeight;
 
+        let tempText = bars[i + 1].innerText;
 
-        let tempText =
-            bars[i + 1].innerText;
+        bars[i + 1].innerText = bars[high].innerText;
 
-        bars[i + 1].innerText =
-            bars[high].innerText;
-
-        bars[high].innerText =
-            tempText;
-
+        bars[high].innerText = tempText;
 
         swapCount++;
 
         updateCounters();
     }
 
+    bars[high].style.backgroundColor = "blue";
 
-    bars[high].style.backgroundColor =
-        "blue";
+    bars[i + 1].style.backgroundColor = "green";
 
-    bars[i + 1].style.backgroundColor =
-        "green";
+    progress.completed++;
 
+    updateProgress(
+        progress.completed,
+        progress.total
+    );
 
     return i + 1;
 }
+
 
 
 function updateAlgorithmInfo() {
