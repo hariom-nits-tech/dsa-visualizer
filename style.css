@@ -1,128 +1,131 @@
+
+/* ==============================
+   GLOBAL STYLING
+============================== */
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     text-align: center;
     font-family: Arial, sans-serif;
-    background-color:#f5f5f5;
-    font-family:Arial, sans-serif;
-    margin:0;
-    padding:0;
-
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
+
+h1 {
+    padding: 0 10px;
+}
+
+/* ==============================
+   ARRAY VISUALIZATION
+============================== */
 
 #array-container {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     height: 400px;
-    margin-top:20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 10px;
+    overflow: hidden;
 }
 
 .bar {
-    width:20px;
-    margin:0 2px;
-    background-color:blue;
+    flex: 1;
+    min-width: 0;
+    max-width: 30px;
+    margin: 0 2px;
+    background-color: blue;
     color: white;
     font-size: 10px;
-    text-align:center;
+    text-align: center;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: flex-end;
+    border-radius: 4px 4px 0 0;
     transition: height 0.2s ease, background-color 0.2s;
 }
- 
 
-#controls{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:15px;
-    margin:20px;
-    padding:15px;
-    background:#f2f2f2;
-    border-radius:10px;
-}
-button{
-    background-color:#4CAF50;
-    Color:white;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:16px;
-    transition:
-    background-color 0.3s,
-    transform 0.3s;
+/* ==============================
+   CONTROLS
+============================== */
 
-
+#controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px;
+    padding: 15px;
+    background: #f2f2f2;
+    border-radius: 10px;
 }
 
-button:hover{
-    background-color:#45a049;
-    transform:scale(1.05);
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-button:disabled{
-    background-color:#45a049;
-    cursor:not-allowed;
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
 }
 
-#info{
-    background:white;
-    width:500px;
-    margin:20px auto;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    text-align:left;
+button:disabled {
+    background-color: #45a049;
+    cursor: not-allowed;
 }
 
-#statistics{
-    width:500px;
-    margin:20px auto;
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+/* ==============================
+   ALGORITHM INFORMATION
+============================== */
+
+#info {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: left;
 }
 
-#statistics p{
-    font-size:18px;
-    margin:10px 0;
-}
-.bar{
-    border-radius:4px 4px 0 0;
-}
-.dark-mode{
-    background-color:#1e1e1e;
-    color:white;
-}
-.dark-mode #info,
-.dark-mode #statistics{
-    background:#2d2d2d;
-    color:white;
-}
-.dark-mode #controls{
-    background:#333;
-}
-.dark-mode #theme{
-    background:#2563eb;
-}
-.dark-mode button:hover{
-    background:#1d4ed8;
-}
-.dark-mode .bar{
-    background-color:#60a5fa;
-}
-.dark-mode input,
-.dark-mode select{
-    background:#444;
-    color:white;
-    border:1px solid #666;
+/* ==============================
+   STATISTICS
+============================== */
+
+#statistics {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.dark-mode input::placeholder{
-    color:#ccc;
+#statistics p {
+    font-size: 18px;
+    margin: 10px 0;
 }
+
+/* ==============================
+   COLOR LEGEND
+============================== */
 
 #legend {
     display: flex;
@@ -144,6 +147,7 @@ button:disabled{
     height: 18px;
     display: inline-block;
     border-radius: 4px;
+    flex-shrink: 0;
 }
 
 .legend-box.blue {
@@ -160,4 +164,161 @@ button:disabled{
 
 .legend-box.green {
     background-color: green;
+}
+
+/* ==============================
+   DARK MODE
+============================== */
+
+.dark-mode {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.dark-mode #info,
+.dark-mode #statistics {
+    background: #2d2d2d;
+    color: white;
+}
+
+.dark-mode #controls {
+    background: #333;
+}
+
+.dark-mode #theme {
+    background: #2563eb;
+}
+
+.dark-mode button:hover {
+    background: #1d4ed8;
+}
+
+.dark-mode .bar {
+    background-color: #60a5fa;
+}
+
+.dark-mode input,
+.dark-mode select {
+    background: #444;
+    color: white;
+    border: 1px solid #666;
+}
+
+.dark-mode input::placeholder {
+    color: #ccc;
+}
+
+/* ==============================
+   TABLET RESPONSIVENESS
+============================== */
+
+@media (max-width: 768px) {
+
+    #array-container {
+        height: 320px;
+        padding: 0 5px;
+    }
+
+    .bar {
+        margin: 0 1px;
+        font-size: 8px;
+    }
+
+    #controls {
+        margin: 12px;
+        gap: 10px;
+    }
+
+    button {
+        padding: 9px 14px;
+        font-size: 14px;
+    }
+
+    #statistics p {
+        font-size: 16px;
+    }
+}
+
+/* ==============================
+   MOBILE RESPONSIVENESS
+============================== */
+
+@media (max-width: 480px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    #array-container {
+        height: 250px;
+        margin-top: 15px;
+        padding: 0 4px;
+    }
+
+    .bar {
+        margin: 0 0.5px;
+        font-size: 6px;
+        border-radius: 2px 2px 0 0;
+    }
+
+    #controls {
+        flex-direction: column;
+        align-items: stretch;
+        margin: 10px;
+        padding: 12px;
+        gap: 10px;
+    }
+
+    #controls button,
+    #controls select,
+    #controls input {
+        max-width: 100%;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    #info,
+    #statistics {
+        width: 94%;
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    #statistics p {
+        font-size: 14px;
+    }
+
+    #legend {
+        gap: 12px;
+        margin: 15px 5px;
+        font-size: 12px;
+    }
+
+    .legend-box {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+#algorithm-section {
+    width: 90%;
+    max-width: 540px;
+    margin: 20px auto;
+}
+
+#algorithm-section h2 {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+#algorithm-section #info {
+    margin: 0 auto;
 }
